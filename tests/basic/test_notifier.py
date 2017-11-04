@@ -1,6 +1,6 @@
 from tests.helpers import load_json
 from functions.basic.notifier import notify
-from unittest.mock import Mock, patch, ANY
+from unittest.mock import patch
 import pytest
 
 URL = 'http://myservice.com'
