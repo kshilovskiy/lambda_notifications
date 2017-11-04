@@ -8,7 +8,7 @@ S3_PATH = 's3://sourcebucket/results.json'
 EXPECTED_BODY = { 's3_path': S3_PATH }
 EXPECTED_AUTH = ('user','pass')
 
-CONSUMER = {
+RECEIVER = {
     'url': URL,
     'username': 'user',
     'password': 'pass'
@@ -21,6 +21,6 @@ def no_requests(monkeypatch):
 
 @patch('functions.basic.notifier.requests.post')
 def test_notification_is_sent(mock_post):
-    notify(CONSUMER, S3_PATH)
+    notify(RECEIVER, S3_PATH)
 
     mock_post.assert_called_with(URL, json=EXPECTED_BODY, auth=EXPECTED_AUTH)
