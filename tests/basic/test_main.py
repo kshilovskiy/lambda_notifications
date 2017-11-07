@@ -11,7 +11,7 @@ PASSWORD = 'pass'
 EVENT_LIST_JSON = load_json('tests/basic/fixtures/sample_s3_event_list.json')
 EXPECTED_S3_PATH = 's3://sourcebucket/results/myNewResults.json'
 
-RECEIVER = {
+CONSUMER = {
     'url': URL,
     'username': USERNAME,
     'password': PASSWORD
@@ -19,11 +19,11 @@ RECEIVER = {
 
 @pytest.fixture(autouse=True)
 def env_vars(monkeypatch):
-    monkeypatch.setenv('RECEIVER_URL', URL)
-    monkeypatch.setenv('RECEIVER_USERNAME', USERNAME)
-    monkeypatch.setenv('RECEIVER_PASSWORD', PASSWORD)
+    monkeypatch.setenv('CONSUMER_URL', URL)
+    monkeypatch.setenv('CONSUMER_USERNAME', USERNAME)
+    monkeypatch.setenv('CONSUMER_PASSWORD', PASSWORD)
 
 @patch('functions.basic.main.notifier.notify')
-def test_receiver_is_notified(mock_notifier):
+def test_consumer_is_notified(mock_notifier):
     main.handle(EVENT_LIST_JSON, {})
-    mock_notifier.assert_called_with(RECEIVER, EXPECTED_S3_PATH)
+    mock_notifier.assert_called_with(CONSUMER, EXPECTED_S3_PATH)

@@ -8,17 +8,17 @@ logger.setLevel(logging.INFO)
 
 
 def handle(s3_event, context):
-    receiver = _get_receiver()
+    consumer = _get_consumer()
 
     for event in s3_event['Records']:
         s3_path = event_parser.extract_s3_path(event)
         logger.info(f"Extracted path {s3_path}")
 
-        notifier.notify(receiver, s3_path)
+        notifier.notify(consumer, s3_path)
 
-def _get_receiver():
+def _get_consumer():
     return {
-        'url': os.getenv('RECEIVER_URL'),
-        'username': os.getenv('RECEIVER_USERNAME'),
-        'password': os.getenv('RECEIVER_PASSWORD')
+        'url': os.getenv('CONSUMER_URL'),
+        'username': os.getenv('CONSUMER_USERNAME'),
+        'password': os.getenv('CONSUMER_PASSWORD')
     }
